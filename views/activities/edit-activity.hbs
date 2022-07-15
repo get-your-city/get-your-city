@@ -1,1 +1,13 @@
 <h2>Edit Activity</h2>
+<form action="/activities/{{activity.id}}/edit" method="POST">
+    <label>Name: <input type="text" name="name" value="{{activity.name}}" required></label>
+    <label>Description: <input type="text" name="description" value="{{activity.description}}"></label>
+    <label>Location: <input type="text" name="location" value="{{activity.location}}"></label>
+    <label for="city">City: </label>
+    <select name="city" id="city">
+        {{#each cities}}
+        <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select>
+    <button>Submit</button>
+</form>

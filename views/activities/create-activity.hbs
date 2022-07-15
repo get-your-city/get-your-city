@@ -4,7 +4,7 @@
     <label>Description: <input type="text" name="description"></label>
     <label>Location: <input type="text" name="location"></label>
     <label for="city">City: </label>
-    <select name="city" id="city"> {cities}
+    <select name="city" id="city">
         {{#each cities}}
         <option value="{{id}}">{{name}}</option>
         {{/each}}

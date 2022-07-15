@@ -34,19 +34,55 @@ router.post("/create", (req, res, next) => {
         })
 })
 
-router.get("/:id", (req, res, next) => {
-
+router.get("/:activityId", (req, res, next) => {
+    const {activityId} = req.params
+    Activity.findById(activityId)
+        .populate("city")
+        .then(activity => {
+            res.render("activities/activity", activity)
+        })
+        .catch(err => {
+            console.log("Error while rendering activity: " + err);
+            next(err)
+        })
 })
 
-router.get("/:id/edit", (req, res, next) => {
-    
+router.get("/:activityId/edit", (req, res, next) => {
+    let cities
+    City.find()
+        .then(citiesFromDB => {
+            cities = citiesFromDB
+        })
+        .catch(err => {
+            console.log("Error while loading cities: " + err);
+            next(err)
+        })        
+    const {activityId} = req.params
+    Activity.findById(activityId)
+        .populate("city")
+        .then(activity => {
+            res.render("activities/edit-activity", {activity, cities})
+        })
+        .catch(err => {
+            console.log("Error while rendering edit page of activity: " + err);
+            next(err)
+        })        
 })
 
-router.post("/:id/edit", (req, res, next) => {
-    
+router.post("/:activityId/edit", (req, res, next) => {
+    const {activityId} = req.params
+    const {name, country, description, location, city} = req.body
+    Activity.findByIdAndUpdate(activityId, {name, country, description, location, city})
+        .then(() => {
+            res.redirect("/activities/" + activityId)
+        })
+        .catch(err => {
+            console.log("Error while editing activity: " + err);
+            next(err)
+        })        
 })
 
-router.post("/:id/delete", (req, res, next) => {
+router.post("/:activityId/delete", (req, res, next) => {
     
 })
 
