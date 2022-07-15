@@ -5,10 +5,16 @@ const userSchema = new Schema(
   {
     username: {
       type: String,
-      // unique: true -> Ideally, should be unique, but its up to you
+      unique: true,
+      required: true
     },
-    password: String,
+    passwordHash: {
+      type: String,
+      required: [true, 'Password is required.']
+    }
   },
+  // favorites: 
+  // userActivities:
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
