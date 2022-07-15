@@ -83,7 +83,16 @@ router.post("/:activityId/edit", (req, res, next) => {
 })
 
 router.post("/:activityId/delete", (req, res, next) => {
-    
+    const {activityId} = req.params
+    const {name, country, description, location, city} = req.body
+    Activity.findByIdAndDelete(activityId)
+        .then(() => {
+            res.redirect("/activities")
+        })
+        .catch(err => {
+            console.log("Error while editing activity: " + err);
+            next(err)
+        })
 })
 
 module.exports = router
