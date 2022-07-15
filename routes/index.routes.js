@@ -42,4 +42,41 @@ router.post("/auth/create", (req, res, next) => {
     })
 })
 
+
+// UPDATE:
+router.get("/auth/:cityId/edit", (req, res, next) => {
+  const {cityId} = req.params;
+
+  City.findById(cityId)
+    .then( (cityDetails) => {
+      res.render("auth/citys-edit", cityDetails);
+    })
+    .catch( (error) => {
+      console.log("Error getting city details from DB", error);
+      next(error);
+    })
+});
+
+
+// UPDATE:
+router.post("/auth/:cityId/edit", (req, res, next) => {
+
+  const cityId = req.params.cityId;
+
+  const newDetails = {
+    name: req.body.name,
+    country: req.body.country,
+    description: req.body.description,
+  }
+
+  City.findByIdAndUpdate(cityId, newDetails)
+    .then( () => {
+      res.redirect("/citys");
+    })
+    .catch( (error) => {
+      console.log("Error updating city in DB", error);
+      next(error);
+    })
+});
+
 module.exports = router;
