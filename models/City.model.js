@@ -13,11 +13,17 @@ const citySchema = new Schema(
       required: true,
     },
     description: String,
+    image: {
+        type: String,
+        data: Buffer
+    },
+    activities: [{
+        type: Schema.Types.ObjectId,
+        ref: "Activity"
+    }]
   },
   {timestamps: true,
-}
-    
-);
+});
 
 const City = model("City", citySchema);
 
