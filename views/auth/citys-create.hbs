@@ -1,0 +1,19 @@
+<h2>Add a City</h2>
+
+<form action="/auth/create" method="POST">
+  <label> Name:
+    <input type="text" name="name" />
+  </label>
+
+  <label>Country:
+    <input type="text" name="country"/>
+  </label>
+   <label> Description:
+    <textarea name="description" cols="30" rows="4"> </textarea>
+  </label>
+  {{!-- <label> Image:
+    <input type="" name="image"/>
+  </label> --}}
+
+  <button type="submit"> Create </button>
+</form>
