@@ -2,6 +2,7 @@ const router = require("express").Router()
 const Activity = require("../models/Activity.model")
 const City = require("../models/City.model")
 const User = require("../models/User.model")
+const isLoggedIn = require("../middleware/isLoggedIn")
 
 router.get("/", (req, res, next) => {
     Activity.find()
@@ -15,14 +16,14 @@ router.get("/", (req, res, next) => {
         })
 })
 
-router.get("/create", (req, res, next) => {
+router.get("/create", isLoggedIn, (req, res, next) => {
     City.find()
         .then(dataFromDB => {
             res.render("activities/create-activity", {cities: dataFromDB})
         })
 })
 
-router.post("/create", (req, res, next) => {
+router.post("/create", isLoggedIn, (req, res, next) => {
     const {name, country, description, location, city} = req.body
     Activity.create({name, country, description, location, city})
         .then(() => {
@@ -47,7 +48,7 @@ router.get("/:activityId", (req, res, next) => {
         })
 })
 
-router.get("/:activityId/edit", (req, res, next) => {
+router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
     let cities
     City.find()
         .then(citiesFromDB => {
@@ -69,7 +70,7 @@ router.get("/:activityId/edit", (req, res, next) => {
         })        
 })
 
-router.post("/:activityId/edit", (req, res, next) => {
+router.post("/:activityId/edit", isLoggedIn, (req, res, next) => {
     const {activityId} = req.params
     const {name, country, description, location, city} = req.body
     Activity.findByIdAndUpdate(activityId, {name, country, description, location, city})
@@ -82,7 +83,7 @@ router.post("/:activityId/edit", (req, res, next) => {
         })        
 })
 
-router.post("/:activityId/delete", (req, res, next) => {
+router.post("/:activityId/delete", isLoggedIn, (req, res, next) => {
     const {activityId} = req.params
     const {name, country, description, location, city} = req.body
     Activity.findByIdAndDelete(activityId)
