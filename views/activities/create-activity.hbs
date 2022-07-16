@@ -1,8 +1,14 @@
 <h2>Create Activity</h2>
 <form action="/activities/create" method="POST">
-    <label>Name: <input type="text" name="name" required></label>
-    <label>Description: <input type="text" name="description"></label>
-    <label>Location: <input type="text" name="location"></label>
+    <label>Name: 
+        <input type="text" name="name" required>
+    </label>
+    <label> Description: 
+        <textarea name="description" cols="30" rows="4"></textarea>
+    </label>
+    <label>Location: 
+        <input type="text" name="location">
+    </label>
     <label for="city">City: </label>
     <select name="city" id="city">
         {{#each cities}}
