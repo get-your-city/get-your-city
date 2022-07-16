@@ -4,6 +4,19 @@ const City = require("../models/City.model")
 const User = require("../models/User.model")
 const isLoggedIn = require("../middleware/isLoggedIn")
 
+function getCityById(req, res, next){
+    const {cityId} = req.params
+    City.findById(cityId)
+        .then(cityFromDB => {
+            req.city = cityFromDB
+            next()
+        })
+        .catch(err => {
+            console.log("An error occurred while loading city from DB: " + err)
+            next()
+        })
+}
+
 router.get("/", (req, res, next) => {
     Activity.find()
         .populate("city")
