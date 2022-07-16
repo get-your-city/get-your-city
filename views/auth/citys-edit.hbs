@@ -1,0 +1,19 @@
+<a href="/">Home</a>
+<a href="/citys">Back</a>
+
+<h2>Edit the City: {{name}}</h2>
+
+<form action="/auth/{{_id}}/edit" method="POST">
+  <label> Name:
+    <input type="text" name="name" value="{{name}}" />
+  </label>
+
+  <label> Description:
+    <textarea name="description" cols="30" rows="4">
+        {{description}}
+    </textarea>
+  </label>
+
+
+  <button>Save changes</button>
+</form>
