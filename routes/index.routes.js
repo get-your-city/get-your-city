@@ -2,6 +2,9 @@ const router = require("express").Router();
 const City = require("../models/City.model");
 
 /* GET home page */
+router.get("/", (req, res, next) => {
+  res.render("index")
+})
 
 // READ: List of all citys
 router.get("/citys", (req, res, next) => {
