@@ -8,8 +8,12 @@
             Description: {{this.description}} <br />
             Image: {{this.image}} <br />
         </p>
-        
+    
         <a href="/auth/{{this._id}}/edit">Edit</a>
+
+        <form action="/auth/{{this._id}}/delete" method="POST" >
+            <button>Delete</button>
+            </form>
 
     </section>
 {{/each}}

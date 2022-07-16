@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const City = require("../models/City.model");
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -26,7 +27,7 @@ router.get("/auth/create", (req, res, next) => {
     })
 
 // CREATE: Process form
-router.post("/auth/create", (req, res, next) => {
+router.post("/auth/create", isLoggedIn, (req, res, next) => {
 
   const cityDetails = {
     name: req.body.name,
@@ -47,7 +48,7 @@ router.post("/auth/create", (req, res, next) => {
 
 
 // UPDATE:
-router.get("/auth/:cityId/edit", (req, res, next) => {
+router.get("/auth/:cityId/edit", isLoggedIn, (req, res, next) => {
   const {cityId} = req.params;
 
   City.findById(cityId)
@@ -62,7 +63,7 @@ router.get("/auth/:cityId/edit", (req, res, next) => {
 
 
 // UPDATE:
-router.post("/auth/:cityId/edit", (req, res, next) => {
+router.post("/auth/:cityId/edit", isLoggedIn, (req, res, next) => {
 
   const cityId = req.params.cityId;
 
@@ -81,5 +82,21 @@ router.post("/auth/:cityId/edit", (req, res, next) => {
       next(error);
     })
 });
+
+
+// DELETE city
+router.post("/auth/:cityId/delete", isLoggedIn, (req, res, next) => {
+  const {cityId} = req.params;
+
+  City.findByIdAndRemove(cityId)
+    .then( () => {
+      res.redirect('/citys');
+    })
+    .catch( (error) => {
+      console.log("Error deleting city from DB", error);
+      next(error);
+    })
+
+})
 
 module.exports = router;
