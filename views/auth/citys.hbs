@@ -11,11 +11,15 @@
             Image: {{this.image}} <br />
         </p>
     
+        <form action="/activities" method="GET">
+            <button name="city" value="{{this.id}}">Activities</button>
+        </form>
+
         <a href="/auth/{{this._id}}/edit">Edit</a>
 
         <form action="/auth/{{this._id}}/delete" method="POST" >
             <button>Delete</button>
-            </form>
+        </form>
 
     </section>
 {{/each}}

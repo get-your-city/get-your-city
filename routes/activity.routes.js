@@ -18,10 +18,11 @@ function getCityById(req, res, next){
 }
 
 router.get("/", (req, res, next) => {
-    Activity.find()
+    const {city} = req.query
+    Activity.find({city})
         .populate("city")
-        .then(dataFromDB => {
-            res.render("activities/activities", {activities: dataFromDB})
+        .then(activitiesFromDB => {
+            res.render("activities/activities", {activities: activitiesFromDB})
         })
         .catch(err => {
             console.log("An error has occurred while rendering activities: " + err)
