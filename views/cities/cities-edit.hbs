@@ -5,18 +5,18 @@
 
 <form action="/cities/{{_id}}/edit" method="POST" enctype="multipart/form-data">
   <label> Name:
-    <input type="text" name="name" value="{{name}}" />
+    <input type="text" name="name" value="{{name}}" required/>
   </label>
-
+  <label> Country:
+    <input type="text" name="country" value="{{country}}" required/>
+  </label>
   <label> Description:
     <textarea name="description" cols="30" rows="4">
         {{description}}
     </textarea>
   </label>
   <label> Image:
-    <input type="file" name="cityImage"/>
+    <input type="file" name="cityImage" required/>
   </label>
-
-
   <button>Save changes</button>
 </form>

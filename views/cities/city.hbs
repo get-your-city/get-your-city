@@ -1,27 +1,19 @@
-<a href="/">Home</a>
+<section class="">
+    <img src="{{this.imageUrl}}" alt="">
+    <h2>{{this.name}}</h2>
+    <p>
+        Country: {{this.country}} <br />
+        Description: {{this.description}} <br />
+    </p>
 
-<h1>Citys to visit</h1>
+    <form action="/activities" method="GET">
+        <button name="city" value="{{this._id}}">Activities</button>
+    </form>
 
-{{#each citiesArr}}
-    <section class="">
-        <img src="{{this.imageUrl}}" alt="">
-        <h2>{{this.name}}</h2>
-        <p>
-            Country: {{this.country}} <br />
-            Description: {{this.description}} <br />
-        </p>
-    
-        <form action="/activities" method="GET">
-            <button name="city" value="{{this.id}}">Activities</button>
-        </form>
+    <a href="/cities/{{this._id}}/edit">Edit</a>
 
-        <a href="/cities/{{this._id}}/edit">Edit</a>
+    <form action="/cities/{{this._id}}/delete" method="POST">
+        <button>Delete</button>
+    </form>
 
-        <form action="/cities/{{this._id}}/delete" method="POST" >
-            <button>Delete</button>
-        </form>
-
-    </section>
-{{/each}}
-
- <a href="/cities/create">Add City</a>
+</section>
