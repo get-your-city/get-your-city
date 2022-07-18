@@ -54,19 +54,6 @@ router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
         })
 })
 
-router.get("/:activityId", (req, res, next) => {
-    const {activityId} = req.params
-    Activity.findById(activityId)
-        .populate("city")
-        .then(activity => {
-            res.render("activities/activity", activity)
-        })
-        .catch(err => {
-            console.log("Error while rendering activity: " + err);
-            next(err)
-        })
-})
-
 router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
     let cities
     City.find()

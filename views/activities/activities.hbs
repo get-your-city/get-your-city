@@ -5,7 +5,10 @@
         <p>{{city.name}}</p>
         <p>{{description}}</p>
         <p>{{location}}</p>
-        <a href="/activities/{{id}}">Details</a>
+        <a href="/activities/{{id}}/edit">Edit</a>
+        <form action="/activities/{{id}}/delete" method="POST">
+            <button>Delete</button>
+        </form>
         <hr>
     </div>
 {{/each}}
