@@ -1,13 +1,11 @@
 const router = require("express").Router();
 const City = require("../models/City.model");
-const isLoggedIn = require("../middleware/isLoggedIn");
-const fileUploader = require('../config/cloudinary.config');
 
 /* GET home page */
 router.get("/", (req, res, next) => {
     City.find()
       .then( citiesArr => {
-        res.render("index", {citysArr: citiesArr});
+        res.render("index", {citiesArr});
         })
         
       .catch( (error) => {
@@ -15,7 +13,5 @@ router.get("/", (req, res, next) => {
         next(error);
       })
     })
-
-
 
 module.exports = router;

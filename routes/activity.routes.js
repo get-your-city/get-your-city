@@ -1,28 +1,19 @@
 const router = require("express").Router()
 const Activity = require("../models/Activity.model")
 const City = require("../models/City.model")
-const User = require("../models/User.model")
 const isLoggedIn = require("../middleware/isLoggedIn")
-
-function getCityById(req, res, next){
-    const {cityId} = req.params
-    City.findById(cityId)
-        .then(cityFromDB => {
-            req.city = cityFromDB
-            next()
-        })
-        .catch(err => {
-            console.log("An error occurred while loading city from DB: " + err)
-            next()
-        })
-}
 
 router.get("/", (req, res, next) => {
     const {city} = req.query
+    let cityName
+    City.findById(city)
+        .then(cityFromDB => {
+            cityName = cityFromDB.name
+        })
     Activity.find({city})
         .populate("city")
         .then(activitiesFromDB => {
-            res.render("activities/activities", {activities: activitiesFromDB})
+            res.render("activities/activities", {activities: activitiesFromDB, cityName})
         })
         .catch(err => {
             console.log("An error has occurred while rendering activities: " + err)
