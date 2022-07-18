@@ -81,6 +81,7 @@ router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
     Activity.findById(activityId)
         .populate("city")
         .then(activity => {
+            cities = cities.filter(city => city.name !== activity.city.name)
             res.render("activities/edit-activity", {activity, cities})
         })
         .catch(err => {

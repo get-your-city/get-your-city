@@ -11,6 +11,7 @@
     </label>
     <label for="city">City: </label>
     <select name="city" id="city">
+        <option value="{{activity.city.id}}" selected>{{activity.city.name}}</option>
         {{#each cities}}
         <option value="{{id}}" >{{name}}</option>
         {{/each}}
