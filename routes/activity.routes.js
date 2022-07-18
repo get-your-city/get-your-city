@@ -37,9 +37,14 @@ router.get("/create", isLoggedIn, (req, res, next) => {
         })
 })
 
-router.post("/create", isLoggedIn, (req, res, next) => {
-    const {name, country, description, location, city} = req.body
-    Activity.create({name, country, description, location, city})
+router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
+    const {name, description, location, city} = req.body
+    Activity.create({
+        name: name,
+        description: description || "no description",
+        location: location || "no location",
+        city: city
+    })
         .then(() => {
             res.redirect("/activities")
         })
@@ -84,10 +89,16 @@ router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
         })        
 })
 
-router.post("/:activityId/edit", isLoggedIn, (req, res, next) => {
+router.post("/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, next) => {
     const {activityId} = req.params
-    const {name, country, description, location, city} = req.body
-    Activity.findByIdAndUpdate(activityId, {name, country, description, location, city})
+    const {name, description, location, city} = req.body
+    const updatedActivityData = {
+        name: name,
+        description: description || "no description",
+        location: location || "no location",
+        city: city
+    }
+    Activity.findByIdAndUpdate(activityId, {updatedActivityData})
         .then(() => {
             res.redirect("/activities/" + activityId)
         })
@@ -109,5 +120,12 @@ router.post("/:activityId/delete", isLoggedIn, (req, res, next) => {
             next(err)
         })
 })
+
+function validateActivityInput(req, res, next){
+    if (!(req.body.name && req.body.city)){
+        return res.send("Please fill all required fields.")
+    }
+    next()
+}
 
 module.exports = router

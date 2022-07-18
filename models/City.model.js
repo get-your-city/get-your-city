@@ -10,14 +10,13 @@ const citySchema = new Schema(
     },
     country: {
       type: String,
-      required: true,
+      required: true
     },
     description: String,
-    imageUrl: String,
-    activities: [{
-        type: Schema.Types.ObjectId,
-        ref: "Activity"
-    }]
+    imageUrl: {
+      type: String,
+      required: true
+    },
   },
   {timestamps: true,
 });

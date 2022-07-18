@@ -3,24 +3,34 @@ const City = require("../models/City.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const fileUploader = require('../config/cloudinary.config');
 
+// READ: Single city
+router.get("/:cityId", (req, res, next) => {
+    const {cityId} = req.params
+    City.findById(cityId)
+        .then(cityFromDB => {
+            res.render("cities/city", cityFromDB)
+        })
+        .catch(err => {
+            console.log("An error has occurred while loading city from DB: " + err);
+            next()
+        })
+})
+
 // CREATE: Render form
     router.get("/create", (req, res, next) => {
         res.render("cities/cities-create");
       })
   
   // CREATE: Process form
-  router.post("/create", isLoggedIn, fileUploader.single('cityImage'), (req, res, next) => {
-    console.log("here to create city.....................................")
+  router.post("/create", isLoggedIn, fileUploader.single('cityImage'), validateCityInput, (req, res, next) => {
     const cityDetails = {
       name: req.body.name,
       country: req.body.country,
-      description: req.body.description,
-      imageUrl: req.file.path || undefined
+      description: req.body.description || "no description",
+      imageUrl: req.file.path
     };
-  
     City.create(cityDetails)
       .then( () => {
-        console.log("before redirecting..............................");
         res.redirect("/");
       })
       .catch( (error) => {
@@ -46,14 +56,15 @@ const fileUploader = require('../config/cloudinary.config');
   
   
   // UPDATE:
-  router.post("/:cityId/edit", isLoggedIn, (req, res, next) => {
+  router.post("/:cityId/edit", isLoggedIn, fileUploader.single('cityImage'), validateCityInput, (req, res, next) => {
   
     const cityId = req.params.cityId;
   
     const newDetails = {
       name: req.body.name,
       country: req.body.country,
-      description: req.body.description,
+      description: req.body.description || "no description",
+      imageUrl: req.file.path
     }
   
     City.findByIdAndUpdate(cityId, newDetails)
@@ -81,5 +92,12 @@ const fileUploader = require('../config/cloudinary.config');
       })
   
   })
+
+  function validateCityInput(req, res, next){
+    if (!(req.body.name && req.body.country && req.file)){
+        return res.send("Please fill all required fields.")
+    }
+    next()
+  }
 
   module.exports = router

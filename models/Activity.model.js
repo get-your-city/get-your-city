@@ -10,12 +10,14 @@ const activitySchema = new Schema(
     description: String,
     location: String,
     city: {
-        type: Schema.Types.ObjectId,
-        ref: "City"
+      type: Schema.Types.ObjectId,
+      ref: "City",
+      required: true
     }
   },
-  {timestamps: true,
-});
+  {
+    timestamps: true,
+  });
 
 const Activity = model("Activity", activitySchema);
 
