@@ -1,15 +1,10 @@
-<nav>
-         <a href="/">Home</a> | 
-         <a href="/citys">Citys</a> |
+<h1>Get Your City!</h1>
 
-         <a href="/auth/signup">Register</a> |
-         <a href="/auth/login">Login</a> |
+{{#each citysArr}}
+    <section class="">
+        <img src="{{this.imageUrl}}" alt="">
+        <h2>{{this.name}}</h2>    
+    </section>
+{{/each}}
 
-         <form id="logout-form" action="/auth/logout" method="POST">
-            <button>Logout</button>
-         </form>
-
-      </nav>
-
-<h1>{{appTitle}} 🚀</h1>
-<p>Welcome Ironhacker!</p>
+ <a href="/cities/create">Add City</a>
