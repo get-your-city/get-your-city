@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const City = require("../models/City.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const fileUploader = require('../config/cloudinary.config');
 
 /* GET home page */
 router.get("/", (req, res, next) => {
@@ -27,13 +28,13 @@ router.get("/auth/create", (req, res, next) => {
     })
 
 // CREATE: Process form
-router.post("/auth/create", isLoggedIn, (req, res, next) => {
+router.post("/auth/create", isLoggedIn, fileUploader.single('cityImage'), (req, res, next) => {
 
   const cityDetails = {
     name: req.body.name,
     country: req.body.country,
     description: req.body.description,
-    // image: req.body.image,
+    imageUrl: req.file.path
   };
 
   City.create(cityDetails)

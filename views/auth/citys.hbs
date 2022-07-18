@@ -4,11 +4,11 @@
 
 {{#each citysArr}}
     <section class="">
+        <img src="{{this.imageUrl}}" alt="">
         <h2>{{this.name}}</h2>
         <p>
             Country: {{this.country}} <br />
             Description: {{this.description}} <br />
-            Image: {{this.image}} <br />
         </p>
     
         <form action="/activities" method="GET">
@@ -24,4 +24,4 @@
     </section>
 {{/each}}
 
- <a href="/auth/create">Create</a>
+ <a href="/auth/create">Add City</a>
