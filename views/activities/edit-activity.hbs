@@ -12,7 +12,7 @@
     <label for="city">City: </label>
     <select name="city" id="city">
         {{#each cities}}
-        <option value="{{id}}">{{name}}</option>
+        <option value="{{id}}" {{#if }} {{/if}}>{{name}}</option>
         {{/each}}
     </select>
     <button>Submit</button>

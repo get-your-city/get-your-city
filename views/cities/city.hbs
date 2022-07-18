@@ -2,7 +2,7 @@
 
 <h1>Citys to visit</h1>
 
-{{#each citysArr}}
+{{#each citiesArr}}
     <section class="">
         <img src="{{this.imageUrl}}" alt="">
         <h2>{{this.name}}</h2>
@@ -15,13 +15,13 @@
             <button name="city" value="{{this.id}}">Activities</button>
         </form>
 
-        <a href="/auth/{{this._id}}/edit">Edit</a>
+        <a href="/cities/{{this._id}}/edit">Edit</a>
 
-        <form action="/auth/{{this._id}}/delete" method="POST" >
+        <form action="/cities/{{this._id}}/delete" method="POST" >
             <button>Delete</button>
         </form>
 
     </section>
 {{/each}}
 
- <a href="/auth/create">Add City</a>
+ <a href="/cities/create">Add City</a>

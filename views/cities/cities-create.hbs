@@ -1,18 +1,18 @@
 <h2>Add a City</h2>
 
-<form action="/auth/create" method="POST" enctype="multipart/form-data">
+<form action="/cities/create" method="POST" enctype="multipart/form-data">
   <label> Name:
-    <input type="text" name="name" />
+    <input type="text" name="name" required/>
   </label>
 
   <label>Country:
-    <input type="text" name="country"/>
+    <input type="text" name="country" required/>
   </label>
    <label> Description:
     <textarea name="description" cols="30" rows="4"> </textarea>
   </label>
   <label> Image:
-    <input type="file" name="cityImage"/>
+    <input type="file" name="cityImage" required/>
   </label>
 
   <button type="submit"> Create </button>
