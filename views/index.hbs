@@ -5,15 +5,15 @@
 
 <div class="container">
 <div class="row justify-content-center">
-{{#each citiesArr}}
-<div id="citys-card" class="col-12 col-md-4 ">
-   <div class="card text-center">
+{{#each citysArr}}
+<div id="citys-card" class="col-7 col-sm-6 col-md-4">
+   <div class="card card text-center">
     <section class="">
         <img src="{{this.imageUrl}}" class="card-img-top img-fluid max-width:100% height:auto" alt="">
         <div class="card-title">
         <p id="card-title">{{this.name}}</p>
         </div>
-        <a href="/cities/{{this._id}}" class="btn btn-outline-info btn-sm">See Details</a>
+        <a id="details-btn" href="/cities/{{this._id}}" class="btn btn-outline-info btn-sm">See Details</a>
     </section>
     </div>
 </div>
