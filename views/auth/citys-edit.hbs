@@ -3,7 +3,7 @@
 
 <h2>Edit the City: {{name}}</h2>
 
-<form action="/auth/{{_id}}/edit" method="POST">
+<form action="/auth/{{_id}}/edit" method="POST" enctype="multipart/form-data">
   <label> Name:
     <input type="text" name="name" value="{{name}}" />
   </label>
@@ -12,6 +12,9 @@
     <textarea name="description" cols="30" rows="4">
         {{description}}
     </textarea>
+  </label>
+  <label> Image:
+    <input type="file" name="cityImage"/>
   </label>
 
 
