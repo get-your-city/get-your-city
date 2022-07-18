@@ -1,10 +1,27 @@
+<div class="border">
+
 <h1>Get Your City!</h1>
 
-{{#each citysArr}}
-    <section class="">
-        <img src="{{this.imageUrl}}" alt="">
-        <h2>{{this.name}}</h2>    
-    </section>
-{{/each}}
 
- <a href="/cities/create">Add City</a>
+<div class="container">
+<div class="row justify-content-center">
+{{#each citysArr}}
+<div id="citys-card" class="col-12 col-md-4 ">
+   <div class="card text-center">
+    <section class="">
+        <img src="{{this.imageUrl}}" class="card-img-top img-fluid max-width:100% height:auto" alt="">
+        <div class="card-title">
+        <p id="card-title">{{this.name}}</p>
+        </div>
+        <a href="/cities/{{this._id}}" class="btn btn-outline-info btn-sm">See Details</a>
+    </section>
+    </div>
+</div>
+{{/each}}
+</div>
+</div>
+</div>
+ 
+ <h4 class="add-city-link"><a href="/cities/create">Add City</a></h4>
+   
+</div>
