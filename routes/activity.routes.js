@@ -25,6 +25,7 @@ router.get("/create", isLoggedIn, (req, res, next) => {
     const {cityId} = req.query
     City.findById(cityId)
         .then(city => {
+            console.log("city: " + city);
             res.render("activities/create-activity", city)
         })
         .catch(err => {
