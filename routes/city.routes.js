@@ -51,15 +51,14 @@ router.get("/:cityId", (req, res, next) => {
       imageUrl: req.file.path
     };
     City.create(cityDetails)
-      .then( () => {
-        res.redirect("/");
+      .then( newCity => {
+        res.redirect("/cities/" + newCity._id);
       })
       .catch( (error) => {
         console.log("Error adding city in the DB", error);
         next(error);
       })
   })
-  
   
   // UPDATE:
   router.get("/:cityId/edit", isLoggedIn, (req, res, next) => {
@@ -91,7 +90,7 @@ router.get("/:cityId", (req, res, next) => {
     }
     City.findByIdAndUpdate(cityId, newDetails)
       .then( () => {
-        res.redirect("/");
+        res.redirect("/cities/" + cityId);
       })
       .catch( (error) => {
         console.log("Error updating city in DB", error);

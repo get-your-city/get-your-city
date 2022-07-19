@@ -31,14 +31,10 @@
         </div>
         
 
-    <form action="/activities" method="GET">
-        <button class="btn btn-info" name="cityId" value="{{city._id}}">Activities in {{city.name}}</button>
-    </form>
+    <a href="/cities/{{city._id}}/activities" class="btn btn-info">Activities in {{city.name}}</a>
 
 
-<form action="/cities/{{city._id}}/edit" method="GET">
-    <button class="btn btn-outline-primary">Edit</button>
-    </form>
+    <a href="/cities/{{city._id}}/edit" class="btn btn-outline-primary">Edit</a>
 
     <form action="/cities/{{city._id}}/delete" method="POST">
         <button class="btn btn-outline-secondary">Delete</button>
