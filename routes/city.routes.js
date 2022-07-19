@@ -18,6 +18,15 @@ router.get("/:cityId", (req, res, next) => {
               }
               res.render("cities/city", {city: cityFromDB, weather: weather})
             })
+            .catch(err => {
+              console.log("An error occurred while retrieving weather data from API: " + err)
+              const weather = {
+                temperature: "-",
+                condition: "-",
+                icon: ""
+              }
+              res.render("cities/city", {city: cityFromDB, weather: weather})
+            })
         })
         .catch(err => {
             console.log("An error has occurred while loading city from DB: " + err);
@@ -31,7 +40,10 @@ router.get("/:cityId", (req, res, next) => {
       })
   
   // CREATE: Process form
-  router.post("/create", isLoggedIn, fileUploader.single('cityImage'), validateCityInput, (req, res, next) => {
+  router.post("/create", isLoggedIn, fileUploader.single('cityImage'), (req, res, next) => {
+    if (!(req.body.name && req.body.country && req.file)){
+      return res.send("Please fill all required fields.")
+    }
     const cityDetails = {
       name: req.body.name,
       country: req.body.country,
@@ -63,19 +75,20 @@ router.get("/:cityId", (req, res, next) => {
       })
   });
   
-  
   // UPDATE:
-  router.post("/:cityId/edit", isLoggedIn, fileUploader.single('cityImage'), validateCityInput, (req, res, next) => {
-  
+  router.post("/:cityId/edit", isLoggedIn, fileUploader.single('cityImage'), (req, res, next) => {
     const cityId = req.params.cityId;
-  
+    if (!(req.body.name && req.body.country)){
+      return res.send("Please fill all required fields.")
+    }
     const newDetails = {
       name: req.body.name,
       country: req.body.country,
-      description: req.body.description || "no description",
-      imageUrl: req.file.path
+      description: req.body.description || "no description"
     }
-  
+    if (req.file){
+      newDetails.imageUrl = req.file.path
+    }
     City.findByIdAndUpdate(cityId, newDetails)
       .then( () => {
         res.redirect("/");
@@ -85,7 +98,6 @@ router.get("/:cityId", (req, res, next) => {
         next(error);
       })
   });
-  
   
   // DELETE city
   router.post("/:cityId/delete", isLoggedIn, (req, res, next) => {
@@ -101,12 +113,5 @@ router.get("/:cityId", (req, res, next) => {
       })
   
   })
-
-  function validateCityInput(req, res, next){
-    if (!(req.body.name && req.body.country && req.file)){
-        return res.send("Please fill all required fields.")
-    }
-    next()
-  }
 
   module.exports = router

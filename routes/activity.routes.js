@@ -2,6 +2,7 @@ const router = require("express").Router()
 const Activity = require("../models/Activity.model")
 const City = require("../models/City.model")
 const isLoggedIn = require("../middleware/isLoggedIn")
+const validateActivityInput = require("../middleware/validateActivityInput")
 
 router.get("/", (req, res, next) => {
     const {cityId} = req.query
@@ -25,7 +26,6 @@ router.get("/create", isLoggedIn, (req, res, next) => {
     const {cityId} = req.query
     City.findById(cityId)
         .then(city => {
-            console.log("city: " + city);
             res.render("activities/create-activity", city)
         })
         .catch(err => {
@@ -35,7 +35,6 @@ router.get("/create", isLoggedIn, (req, res, next) => {
 })
 
 router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
-    console.log(req.body);
     const {name, description, location, city} = req.body
     Activity.create({
         name: name,
@@ -86,7 +85,6 @@ router.post("/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, n
 
 router.post("/:activityId/delete", isLoggedIn, (req, res, next) => {
     const {activityId} = req.params
-    const {name, country, description, location, city} = req.body
     Activity.findByIdAndDelete(activityId)
         .then(() => {
             res.redirect("/activities")
@@ -96,12 +94,5 @@ router.post("/:activityId/delete", isLoggedIn, (req, res, next) => {
             next(err)
         })
 })
-
-function validateActivityInput(req, res, next){
-    if (!req.body.name){
-        return res.send("Please fill all required fields.")
-    }
-    next()
-}
 
 module.exports = router
