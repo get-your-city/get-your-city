@@ -2,13 +2,23 @@ const router = require("express").Router();
 const City = require("../models/City.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const fileUploader = require('../config/cloudinary.config');
+const axios = require("axios").default
 
 // READ: Single city
 router.get("/:cityId", (req, res, next) => {
     const {cityId} = req.params
     City.findById(cityId)
         .then(cityFromDB => {
-            res.render("cities/city", cityFromDB)
+          axios.get(`https://api.weatherapi.com/v1/current.json?key=15bbca2250624ffd9b882647221907&q=${cityFromDB.name}&aqi=yes`)
+            .then(dataFromAPI => {
+              const weather = {
+                temperature: dataFromAPI.data.current.temp_c,
+                condition: dataFromAPI.data.current.condition.text,
+                icon: dataFromAPI.data.current.condition.icon
+              }
+              console.log({cityFromDB, weather: weather});
+              res.render("cities/city", {city: cityFromDB, weather: weather})
+            })
         })
         .catch(err => {
             console.log("An error has occurred while loading city from DB: " + err);
