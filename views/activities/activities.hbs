@@ -1,4 +1,4 @@
-<h2>Activities in {{cityName}}</h2>
+<h2>Activities in {{city.name}}</h2>
 {{#each activities}}
     <div class="activity">
         <p>{{name}}</p>
@@ -12,3 +12,6 @@
         <hr>
     </div>
 {{/each}}
+<form action="/activities/create" method="GET">
+    <button name="cityId" value="{{city._id}}">Add new activity</button>
+</form>

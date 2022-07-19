@@ -1,22 +1,40 @@
-<img src="{{this.imageUrl}}" alt="">
-    
-   <h2>{{this.name}}</h2>
- 
+<div class="container">
+<div class="row justify-content-center">
 
-</div>
+    <div id="city-card" class="col-8 col-sm-6">
+   <div class="card card text-center">
+    <section class="">
+        <img src="{{city.imageUrl}}" class="card-img-top img-fluid max-width:100%" alt="">
+        <div class="card-body">
+        <div class="card-title">
+        <h2>{{city.name}}</h2>
+        </div>
+        <p>{{weather.temperature}}</p>
+    <p>{{weather.condition}}</p>
+    <img src="{{weather.icon}}" alt="">
+    </section>
+
     <p>
-        Country: {{this.country}} <br />
-        Description: {{this.description}} <br />
-    </p>
+        Country: {{city.country}} 
+        </p>
+        <div id="" class="card-text text-justify">
+        <p>Description: {{city.description}}</p>
+        </div>
+        
 
     <form action="/activities" method="GET">
-        <button name="city" value="{{this._id}}">Activities</button>
+        <button name="cityId" value="{{city._id}}">Activities</button>
     </form>
 
-    <a href="/cities/{{this._id}}/edit">Edit</a>
+    <a href="/cities/{{city._id}}/edit">Edit</a>
 
-    <form action="/cities/{{this._id}}/delete" method="POST">
+    <form action="/cities/{{city._id}}/delete" method="POST">
         <button>Delete</button>
     </form>
 
+ </div>
+  </div>
+   </div>
+    </div>
+</div>
 

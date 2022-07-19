@@ -4,16 +4,17 @@ const City = require("../models/City.model")
 const isLoggedIn = require("../middleware/isLoggedIn")
 
 router.get("/", (req, res, next) => {
-    const {city} = req.query
-    let cityName
-    City.findById(city)
+    const {cityId} = req.query
+    let city
+    City.findById(cityId)
         .then(cityFromDB => {
-            cityName = cityFromDB.name
+            city = cityFromDB
+            console.log(cityId, city, cityFromDB, req.query)
         })
     Activity.find({city})
         .populate("city")
         .then(activitiesFromDB => {
-            res.render("activities/activities", {activities: activitiesFromDB, cityName})
+            res.render("activities/activities", {activities: activitiesFromDB, city})
         })
         .catch(err => {
             console.log("An error has occurred while rendering activities: " + err)
@@ -22,9 +23,11 @@ router.get("/", (req, res, next) => {
 })
 
 router.get("/create", isLoggedIn, (req, res, next) => {
-    City.find()
-        .then(dataFromDB => {
-            res.render("activities/create-activity", {cities: dataFromDB})
+    const {id} = req.body
+    City.findById(id)
+        .then(city => {
+            console.log(city)
+            res.render("activities/create-activity", {city})
         })
 })
 
