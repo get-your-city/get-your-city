@@ -16,7 +16,6 @@ router.get("/:cityId", (req, res, next) => {
                 condition: dataFromAPI.data.current.condition.text,
                 icon: dataFromAPI.data.current.condition.icon
               }
-              console.log({cityFromDB, weather: weather});
               res.render("cities/city", {city: cityFromDB, weather: weather})
             })
         })
