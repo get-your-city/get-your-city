@@ -9,12 +9,11 @@ router.get("/", (req, res, next) => {
     City.findById(cityId)
         .then(cityFromDB => {
             city = cityFromDB
-            console.log(cityId, city, cityFromDB, req.query)
         })
-    Activity.find({city})
+    Activity.find({city: cityId})
         .populate("city")
         .then(activitiesFromDB => {
-            res.render("activities/activities", {activities: activitiesFromDB, city})
+            res.render("activities/activities", {activities: activitiesFromDB, city: city})
         })
         .catch(err => {
             console.log("An error has occurred while rendering activities: " + err)
@@ -23,15 +22,19 @@ router.get("/", (req, res, next) => {
 })
 
 router.get("/create", isLoggedIn, (req, res, next) => {
-    const {id} = req.body
-    City.findById(id)
+    const {cityId} = req.query
+    City.findById(cityId)
         .then(city => {
-            console.log(city)
-            res.render("activities/create-activity", {city})
+            res.render("activities/create-activity", city)
+        })
+        .catch(err => {
+            console.log("An error occurred while loading city: " + err);
+            next(err)
         })
 })
 
 router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
+    console.log(req.body);
     const {name, description, location, city} = req.body
     Activity.create({
         name: name,
@@ -49,21 +52,11 @@ router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
 })
 
 router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
-    let cities
-    City.find()
-        .then(citiesFromDB => {
-            cities = citiesFromDB
-        })
-        .catch(err => {
-            console.log("Error while loading cities: " + err);
-            next(err)
-        })        
     const {activityId} = req.params
     Activity.findById(activityId)
         .populate("city")
         .then(activity => {
-            cities = cities.filter(city => city.name !== activity.city.name)
-            res.render("activities/edit-activity", {activity, cities})
+            res.render("activities/edit-activity", activity)
         })
         .catch(err => {
             console.log("Error while rendering edit page of activity: " + err);
@@ -80,9 +73,9 @@ router.post("/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, n
         location: location || "no location",
         city: city
     }
-    Activity.findByIdAndUpdate(activityId, {updatedActivityData})
+    Activity.findByIdAndUpdate(activityId, updatedActivityData)
         .then(() => {
-            res.redirect("/activities/" + activityId)
+            res.redirect("/cities/" + updatedActivityData.city)
         })
         .catch(err => {
             console.log("Error while editing activity: " + err);
@@ -104,7 +97,7 @@ router.post("/:activityId/delete", isLoggedIn, (req, res, next) => {
 })
 
 function validateActivityInput(req, res, next){
-    if (!(req.body.name && req.body.city)){
+    if (!req.body.name){
         return res.send("Please fill all required fields.")
     }
     next()

@@ -1,4 +1,4 @@
-<h2>Add Activity to {{city.name}}</h2>
+<h2>Add Activity to {{name}}</h2>
 <form action="/activities/create" method="POST">
     <label>Name: 
         <input type="text" name="name" required>
@@ -9,11 +9,6 @@
     <label>Location: 
         <input type="text" name="location">
     </label>
-    {{!-- <label for="city">City: </label>
-    <select name="city" id="city">
-        {{#each cities}}
-        <option value="{{id}}">{{name}}</option>
-        {{/each}}
-    </select> --}}
+    <input type="text" name="city" value="{{city._id}}" style="display: none;">
     <button>Submit</button>
 </form>
