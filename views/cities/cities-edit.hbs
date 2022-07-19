@@ -1,8 +1,4 @@
-<a href="/">Home</a>
-<a href="/citys">Back</a>
-
 <h2>Edit the City: {{name}}</h2>
-
 <form action="/cities/{{_id}}/edit" method="POST" enctype="multipart/form-data">
   <label> Name:
     <input type="text" name="name" value="{{name}}" required/>

@@ -4,7 +4,7 @@
 
 <h2 class="card-title pb-5">Add Activity to {{name}}</h2>
 
-<form class="card-text" action="/activities/create" method="POST">
+<form class="card-text" action="/cities/{{_id}}/activities/create" method="POST">
     <div class="form-group">
     <label>Name: <br>
         <input class="border-info" type="text" name="name" required>

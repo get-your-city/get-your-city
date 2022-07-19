@@ -4,8 +4,8 @@ const City = require("../models/City.model")
 const isLoggedIn = require("../middleware/isLoggedIn")
 const validateActivityInput = require("../middleware/validateActivityInput")
 
-router.get("/", (req, res, next) => {
-    const {cityId} = req.query
+router.get("/cities/:cityId/activities", (req, res, next) => {
+    const {cityId} = req.params
     let city
     City.findById(cityId)
         .then(cityFromDB => {
@@ -22,8 +22,8 @@ router.get("/", (req, res, next) => {
         })
 })
 
-router.get("/create", isLoggedIn, (req, res, next) => {
-    const {cityId} = req.query
+router.get("/cities/:cityId/activities/create", isLoggedIn, (req, res, next) => {
+    const {cityId} = req.params
     City.findById(cityId)
         .then(city => {
             res.render("activities/create-activity", city)
@@ -34,7 +34,7 @@ router.get("/create", isLoggedIn, (req, res, next) => {
         })
 })
 
-router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
+router.post("/cities/:cityId/activities/create", isLoggedIn, validateActivityInput, (req, res, next) => {
     const {name, description, location, city} = req.body
     Activity.create({
         name: name,
@@ -43,7 +43,7 @@ router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
         city: city
     })
         .then(() => {
-            res.redirect("/activities")
+            res.redirect(`/cities/${city}/activities`)
         })
         .catch(err => {
             console.log("An error has occurred while creating a new activity: " + err);
@@ -51,7 +51,7 @@ router.post("/create", isLoggedIn, validateActivityInput, (req, res, next) => {
         })
 })
 
-router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
+router.get("/cities/:cityId/activities/:activityId/edit", isLoggedIn, (req, res, next) => {
     const {activityId} = req.params
     Activity.findById(activityId)
         .populate("city")
@@ -64,7 +64,7 @@ router.get("/:activityId/edit", isLoggedIn, (req, res, next) => {
         })        
 })
 
-router.post("/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, next) => {
+router.post("/cities/:cityId/activities/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, next) => {
     const {activityId} = req.params
     const {name, description, location, city} = req.body
     const updatedActivityData = {
@@ -75,7 +75,7 @@ router.post("/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, n
     }
     Activity.findByIdAndUpdate(activityId, updatedActivityData)
         .then(() => {
-            res.redirect("/cities/" + updatedActivityData.city)
+            res.redirect(`/cities/${updatedActivityData.city}/activities`)
         })
         .catch(err => {
             console.log("Error while editing activity: " + err);
@@ -83,11 +83,11 @@ router.post("/:activityId/edit", isLoggedIn, validateActivityInput, (req, res, n
         })        
 })
 
-router.post("/:activityId/delete", isLoggedIn, (req, res, next) => {
-    const {activityId} = req.params
+router.post("/cities/:cityId/activities/:activityId/delete", isLoggedIn, (req, res, next) => {
+    const {cityId, activityId} = req.params
     Activity.findByIdAndDelete(activityId)
         .then(() => {
-            res.redirect("/activities")
+            res.redirect(`/cities/${cityId}/activities`)
         })
         .catch(err => {
             console.log("Error while editing activity: " + err);
