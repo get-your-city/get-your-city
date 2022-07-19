@@ -1,19 +1,40 @@
-<h2>Add a City</h2>
+<div class="row justify-content-center my-5">
 
-<form action="/cities/create" method="POST" enctype="multipart/form-data">
-  <label> Name:
-    <input type="text" name="name" required/>
-  </label>
+  <div class="card text-center font-weight-bold p-5 shadow" style="width: 30rem;">
+    <div class="card-body">
 
-  <label>Country:
-    <input type="text" name="country" required/>
-  </label>
-   <label> Description:
-    <textarea name="description" cols="30" rows="4"> </textarea>
-  </label>
-  <label> Image:
-    <input type="file" name="cityImage" required/>
-  </label>
+      <h2 class="card-title pb-5">Add a City</h2>
 
-  <button type="submit"> Create </button>
-</form>
+
+      <form class="card-text" action="/cities/create" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label> Name: <br>
+            <input class="border-info" type="text" name="name" required />
+          </label>
+
+          <div class="form-group">
+            <label>Country: <br>
+              <input class="border-info" type="text" name="country" required />
+            </label>
+          </div>
+
+          <div class="form-group p-3">
+            <label> Description: <br>
+              <textarea class="border border-info" name="description" cols="30" rows="4"> </textarea>
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label> Upload image: <br>
+              <input class="btn btn-outline-info" type="file" name="cityImage" required />
+            </label>
+          </div>
+
+          <div class="form-group">
+            <button class="btn-lg btn-info" type="submit"> Create </button>
+          </div>
+      </form>
+
+    </div>
+  </div>
+</div>
