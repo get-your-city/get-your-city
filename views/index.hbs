@@ -7,10 +7,10 @@
 <div class="row justify-content-center">
 {{#each citiesArr}}
 <div id="citys-card" class="col-7 col-sm-6 col-md-4 d-flex">
-   <div class="card card text-center">
+   <div class="card card text-center shadow-lg p-3 mb-5">
     <section class="">
         <img src="{{this.imageUrl}}" class="card-img-top img-fluid max-width:100% height:auto" alt="">
-        <div class="card-title">
+        <div class="card-title font-weight-bold">
         <p id="card-title">{{this.name}}</p>
         </div>
         <a id="details-btn" href="/cities/{{this._id}}" class="btn btn-outline-info btn-sm">See Details</a>

@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 16px, "Tisa", Helvetica, Arial, sans-serif;
   background-color: #d2e7ee;
 }
 
@@ -26,6 +26,7 @@ h1 {
   width: 100%;
   object-fit: cover;
   padding: 0.5em;
+  border-radius: 3%;
 }
 
 #citys-card{
@@ -52,4 +53,8 @@ h1 {
 
  #city-description{
   margin: 2em 4em;
+ }
+
+ #country{
+  margin: auto 4em;
  }

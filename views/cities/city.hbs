@@ -2,34 +2,46 @@
 <div class="row justify-content-center">
 
     <div id="city-card" class="col-8 col-sm-6">
-   <div class="card card text-center">
+   <div class="card card text-center shadow-lg p-3 mb-5 bg-white rounded">
     <section class="">
         <img src="{{city.imageUrl}}" class="card-img-top img-fluid max-width:100%" alt="">
+        
         <div class="card-body">
-        <div class="card-title">
-        <h2>{{city.name}}</h2>
-        </div>
-        <p>{{weather.temperature}}</p>
+        
+        <div class="row card-title align-items-center justify-content-center">
+        <h2 class="col-6" >{{city.name}}</h2>
+        
+        <div class="col-2 font-weight-bold" id="weather">
+        <p>{{weather.temperature}}°C</p>
     <p>{{weather.condition}}</p>
+    </div>
+    <div class="col-2">
     <img src="{{weather.icon}}" alt="">
+    </div>
+        
+        </div>
+
     </section>
 
-    <p>
-        Country: {{city.country}} 
+    <p id="country" class="text-left font-weight-bold">
+    {{city.country}} 
         </p>
-        <div id="" class="card-text text-justify">
-        <p>Description: {{city.description}}</p>
+        <div id="city-description" class="card-text text-justify">
+        <p>{{city.description}}</p>
         </div>
         
 
     <form action="/activities" method="GET">
-        <button name="cityId" value="{{city._id}}">Activities</button>
+        <button class="btn btn-info" name="cityId" value="{{city._id}}">Activities in {{city.name}}</button>
     </form>
 
-    <a href="/cities/{{city._id}}/edit">Edit</a>
+
+<form action="/cities/{{city._id}}/edit" method="GET">
+    <button class="btn btn-outline-primary">Edit</button>
+    </form>
 
     <form action="/cities/{{city._id}}/delete" method="POST">
-        <button>Delete</button>
+        <button class="btn btn-outline-secondary">Delete</button>
     </form>
 
  </div>
