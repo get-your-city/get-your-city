@@ -30,16 +30,16 @@
         <p>{{city.description}}</p>
         </div>
         
+<div class="card-body text-center">
+    <a href="/cities/{{city._id}}/activities" class="card-link btn btn-info m-1">Activities in {{city.name}}</a> <br>
 
-    <a href="/cities/{{city._id}}/activities" class="btn btn-info">Activities in {{city.name}}</a>
 
-
-    <a href="/cities/{{city._id}}/edit" class="btn btn-outline-primary">Edit</a>
+    <a href="/cities/{{city._id}}/edit" class="btn btn-outline-primary m-1">Edit</a>
 
     <form action="/cities/{{city._id}}/delete" method="POST">
-        <button class="btn btn-outline-secondary">Delete</button>
+        <button class="btn btn-outline-secondary m-1">Delete</button>
     </form>
-
+</div>
  </div>
   </div>
    </div>
