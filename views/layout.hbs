@@ -15,7 +15,6 @@
 
   <nav class="navbar sticky-top navbar-light bg-light">
     <a class="navbar-brand" href="/">Home</a>
-    <a class="navbar-brand" href="/auth/signup">Register</a>
     {{#if session.user}}
     <form class="navbar-brand" id="logout-form" action="/auth/logout" method="POST">
       <button>Logout</button>
