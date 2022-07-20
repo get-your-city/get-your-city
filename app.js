@@ -23,6 +23,9 @@ const projectName = "get-your-city";
 
 app.locals.appTitle = `${capitalized(projectName)} created with IronLauncher`;
 
+const renderLoginOrLogout = require("./middleware/renderLoginOrLogout")
+app.use(renderLoginOrLogout)
+
 // 👇 Start handling routes here
 const index = require("./routes/index.routes");
 app.use("/", index);
