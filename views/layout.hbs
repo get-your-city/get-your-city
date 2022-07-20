@@ -17,10 +17,10 @@
     <a class="navbar-brand" href="/">Home</a>
     {{#if session.user}}
     <form class="navbar-brand" id="logout-form" action="/auth/logout" method="POST">
-      <button>Logout</button>
+      <button class="btn btn-outline-secondary">Logout</button>
     </form>
     {{else}}
-    <a class="navbar-brand" href="/auth/login">Login </a>
+    <a class="navbar-brand btn btn-info text-white" href="/auth/login">Login </a>
     {{/if}}
   </nav>
   {{{body}}}

@@ -1,15 +1,28 @@
-<h2>Signup</h2>
-<form action="/auth/signup" method="POST">
+<div class="row justify-content-center my-5">
+
+    <div class="card text-center font-weight-bold p-5 shadow" style="width: 30rem;">
+    <div class="card-body">
+
+<h2 class="card-title pb-5">Signup</h2>
+<form class="card-text" action="/auth/signup" method="POST">
+   <div class="form-group">
    <label> Username
       <input type="text" name="username">
    </label>
+   </div>
+   <div class="form-group">
    <label> Password
       <input type="password" name="password">
    </label>
-
-   <button type="submit">Submit</button>
+</div>
+<div class="form-group">
+   <button class="btn btn-info" type="submit">Submit</button>
+</div>
 </form>
 
 {{#if errorMessage}}
    {{errorMessage}}
 {{/if}}
+</div>
+</div>
+</div>
