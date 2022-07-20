@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const getPathForRedirection = require("../utils/getPathForRedirection")
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -33,15 +34,15 @@ router.post("/signup", isLoggedOut, (req, res) => {
     });
   }
 
-  //   ! This use case is using a regular expression to control for special characters and min length
-  // const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+    // ! This use case is using a regular expression to control for special characters and min length
+  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
-  // if (!regex.test(password)) {
-  //   return res.status(400).render("signup", {
-  //     errorMessage:
-  //       "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
-  //   });
-  // }
+  if (!regex.test(password)) {
+    return res.status(400).render("auth/signup", {
+      errorMessage:
+        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+    });
+  }
 
   // Search the database for a user with the username submitted in the form
   User.findOne({ username }).then((found) => {
@@ -66,7 +67,11 @@ router.post("/signup", isLoggedOut, (req, res) => {
       .then((user) => {
         // Bind the user to the session object
         req.session.user = user;
-        res.redirect("/");
+
+        // Get path for redirection
+        const redirectTo = getPathForRedirection(req.session.redirectTo)
+
+        res.redirect(redirectTo || "/");
       })
       .catch((error) => {
         if (error instanceof mongoose.Error.ValidationError) {
@@ -127,7 +132,11 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         }
         req.session.user = user;
         // req.session.user = user._id; // ! better and safer but in this case we saving the entire user object
-        return res.redirect("/");
+
+        // Get path for redirection
+        const redirectTo = getPathForRedirection(req.session.redirectTo)
+
+        return res.redirect(redirectTo || "/");
       });
     })
 

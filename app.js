@@ -34,7 +34,7 @@ const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
 const cityRoutes = require("./routes/city.routes")
-app.use("/cities", cityRoutes)
+app.use("/", cityRoutes)
 
 const activityRoutes = require("./routes/activity.routes")
 app.use("/", activityRoutes)
