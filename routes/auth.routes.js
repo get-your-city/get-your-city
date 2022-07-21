@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const getPathForRedirection = require("../utils/getPathForRedirection")
 
+// ! This use case is using a regular expression to control for special characters and min length
+const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
@@ -17,30 +20,33 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/signup", isLoggedOut, (req, res) => {
   res.render("auth/signup");
-});
+});  
 
 router.post("/signup", isLoggedOut, (req, res) => {
   const { username, password } = req.body;
 
   if (!username) {
     return res.status(400).render("auth/signup", {
-      errorMessage: "Please provide your username.",
-    });
-  }
+      errorMessage: "Please choose a username."
+    });  
+  }  
+
+  if (!password) {
+    return res.status(400).render("auth/signup", {
+      errorMessage: "Please choose a password."
+    });  
+  }  
 
   if (password.length < 8) {
     return res.status(400).render("auth/signup", {
-      errorMessage: "Your password needs to be at least 8 characters long.",
-    });
-  }
-
-    // ! This use case is using a regular expression to control for special characters and min length
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
+      errorMessage: "Your password needs to be at least 8 characters long."
+    });  
+  }  
 
   if (!regex.test(password)) {
     return res.status(400).render("auth/signup", {
       errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+        "Password needs to have at least 8 characters and must contain at least one number, one lowercase and one uppercase letter."
     });
   }
 
@@ -83,7 +89,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         if (error.code === 11000) {
           return res.status(400).render("auth/signup", {
             errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+              "Username need to be unique. The username you chose is already in use."
           });
         }
         return res
@@ -102,7 +108,13 @@ router.post("/login", isLoggedOut, (req, res, next) => {
 
   if (!username) {
     return res.status(400).render("auth/login", {
-      errorMessage: "Please provide your username.",
+      errorMessage: "Please enter your username."
+    });
+  }
+
+  if (!password) {
+    return res.status(400).render("auth/login", {
+      errorMessage: "Please enter your password."
     });
   }
 
@@ -110,7 +122,14 @@ router.post("/login", isLoggedOut, (req, res, next) => {
   // - either length based parameters or we check the strength of a password
   if (password.length < 8) {
     return res.status(400).render("auth/login", {
-      errorMessage: "Your password needs to be at least 8 characters long.",
+      errorMessage: "Your password is at least 8 characters long."
+    });
+  }
+
+  if (!regex.test(password)) {
+    return res.status(400).render("auth/login", {
+      errorMessage:
+        "Your password is at least 8 characters long and contains at least one number, one lowercase and one uppercase letter."
     });
   }
 
@@ -120,7 +139,7 @@ router.post("/login", isLoggedOut, (req, res, next) => {
       // If the user isn't found, send the message that user provided wrong credentials
       if (!user) {
         return res.status(400).render("auth/login", {
-          errorMessage: "Wrong credentials.",
+          errorMessage: "Wrong credentials."
         });
       }
 
