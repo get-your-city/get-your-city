@@ -5,7 +5,7 @@ const City = require('../models/City.model');
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb://localhost/get-your-city';
 
 
-const citys = [
+const cities = [
   {
       name: "Berlin",
       country: "Germany",
@@ -54,9 +54,9 @@ mongoose
 
     
 
-  City.create()
-  .then(() => {
-    
+  City.create(cities)
+  .then(newCities => {
+    console.log("New cities added to the website:", newCities.length);
     // Once created, close the DB connection
     mongoose.connection.close();
   })
