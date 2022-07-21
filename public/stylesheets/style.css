@@ -68,8 +68,11 @@ h2, h3{
 
  .cities-card{
   transition: transform .5s;
+  cursor: pointer;
  }
-
+ .cities-card a{
+ text-decoration: none;
+}
  .weather:hover{
   transform: scale(1.5);
  }
