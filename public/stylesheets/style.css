@@ -69,3 +69,10 @@ h2, h3{
  .cities-card{
   transition: transform .5s;
  }
+
+ .weather:hover{
+  transform: scale(1.5);
+ }
+ .weather{
+  transition: transform .5s;
+ }
