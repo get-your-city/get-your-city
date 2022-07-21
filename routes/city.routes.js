@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const City = require("../models/City.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const isAdmin = require("../middleware/isAdmin")
 const fileUploader = require('../config/cloudinary.config');
 const axios = require("axios").default
 
@@ -98,7 +99,7 @@ router.post("/cities/:cityId/edit", isLoggedIn, fileUploader.single('cityImage')
 });
 
 // DELETE city
-router.post("/cities/:cityId/delete", isLoggedIn, (req, res, next) => {
+router.post("/cities/:cityId/delete", isLoggedIn, isAdmin, (req, res, next) => {
   const { cityId } = req.params;
   City.findByIdAndRemove(cityId)
     .then(() => {
