@@ -16,6 +16,7 @@
   <nav class="navbar sticky-top navbar-light bg-light">
     <a class="navbar-brand" href="/">Home</a>
     {{#if session.user}}
+    <a class="navbar-brand btn btn-info text-white ml-auto" href="/auth/update">Account</a>
     <form class="navbar-brand" id="logout-form" action="/auth/logout" method="POST">
       <button class="btn btn-outline-secondary">Logout</button>
     </form>
