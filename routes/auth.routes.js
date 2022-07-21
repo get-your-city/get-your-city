@@ -258,4 +258,23 @@ router.post("/update", isLoggedIn, (req, res, next) => {
   });
 })
 
+router.post("/delete", (req, res, next) => {
+  const {userId} = req.body
+  User.findByIdAndDelete(userId)
+    .then(user => {
+      req.session.destroy((err) => {
+        if (err) {
+          return res
+            .status(500)
+            .render("auth/logout", { errorMessage: err.message });
+        }
+        res.redirect("/")
+      })
+    })
+    .catch(err => {
+      console.log("An error occurred while deleting user:", err);
+      next(err)
+    })
+})
+
 module.exports = router;
