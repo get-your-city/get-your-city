@@ -179,4 +179,83 @@ router.post("/logout", isLoggedIn, (req, res) => {
   });
 });
 
+router.get("/update", isLoggedIn, (req, res, next) => {
+  const user = req.session.user
+  console.log("password of user while rendering update form:", user.password);
+  res.render("auth/update", {user})
+})
+
+router.post("/update", isLoggedIn, (req, res, next) => {
+  const {username, password, userId} = req.body
+  
+  if (!username) {
+    return res.status(400).render("auth/update", {
+      errorMessage: "Please choose a username."
+    });  
+  }  
+
+  if (!password) {
+    return res.status(400).render("auth/update", {
+      errorMessage: "Please choose a password."
+    });  
+  }  
+
+  if (password.length < 8) {
+    return res.status(400).render("auth/update", {
+      errorMessage: "Your password needs to be at least 8 characters long."
+    });  
+  }  
+
+  if (!regex.test(password)) {
+    return res.status(400).render("auth/update", {
+      errorMessage:
+        "Password needs to have at least 8 characters and must contain at least one number, one lowercase and one uppercase letter."
+    });
+  }
+
+  // Search the database for a user with the username submitted in the form
+  User.findById(userId).then((found) => {
+    // If the user is not found, send the message that the user does not exist
+    if (!found) {
+      return res
+        .status(400)
+        .render("auth/update", { errorMessage: "This user does not exist." });
+    }
+
+    // if user is correctly identified, update user - start with hashing the password
+    return bcrypt
+      .genSalt(saltRounds)
+      .then((salt) => bcrypt.hash(password, salt))
+      .then((hashedPassword) => {
+        // Create a user and save it in the database
+        return User.findByIdAndUpdate(userId, {
+          username,
+          password: hashedPassword,
+          isAdmin: false
+        }, {new: true});
+      })
+      .then((user) => {
+        // Bind the user to the session object
+        req.session.user = user;
+        res.redirect("/");
+      })
+      .catch((error) => {
+        if (error instanceof mongoose.Error.ValidationError) {
+          return res
+            .status(400)
+            .render("auth/update", { errorMessage: error.message });
+        }
+        if (error.code === 11000) {
+          return res.status(400).render("auth/update", {
+            errorMessage:
+              "Username need to be unique. The username you chose is already in use."
+          });
+        }
+        return res
+          .status(500)
+          .render("auth/update", { errorMessage: error.message });
+      });
+  });
+})
+
 module.exports = router;
