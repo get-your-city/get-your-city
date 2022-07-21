@@ -15,6 +15,10 @@ h1 {
   color: rgb(51, 51, 140);
 }
 
+.home-text{
+  color: rgb(17, 165, 165);
+}
+
 h2, h3{
   color: rgb(51, 51, 140);
 }
@@ -42,7 +46,7 @@ h2, h3{
 }
 
 .border{
-  margin: 2em;
+  margin: 5em;
   padding-bottom: 3em;
   background-color:  white;
 }
