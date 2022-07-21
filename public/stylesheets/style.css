@@ -61,3 +61,11 @@ h2, h3{
  #country{
   margin: auto 4em;
  }
+
+.cities-card:hover{
+  transform: scale(1.1);
+ }
+
+ .cities-card{
+  transition: transform .5s;
+ }
