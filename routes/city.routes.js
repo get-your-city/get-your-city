@@ -48,7 +48,7 @@ router.post("/cities/create", isLoggedIn, fileUploader.single('cityImage'), (req
   const cityDetails = {
     name: req.body.name,
     country: req.body.country,
-    description: req.body.description || "no description",
+    description: req.body.description,
     imageUrl: req.file.path
   };
   City.create(cityDetails)
@@ -65,8 +65,8 @@ router.post("/cities/create", isLoggedIn, fileUploader.single('cityImage'), (req
 router.get("/cities/:cityId/edit", isLoggedIn, (req, res, next) => {
   const { cityId } = req.params;
   City.findById(cityId)
-    .then((cityDetails) => {
-      res.render("cities/cities-edit", cityDetails);
+    .then((city) => {
+      res.render("cities/cities-edit", {city});
     })
     .catch((error) => {
       console.log("Error getting city details from DB", error);
@@ -83,7 +83,7 @@ router.post("/cities/:cityId/edit", isLoggedIn, fileUploader.single('cityImage')
   const newDetails = {
     name: req.body.name,
     country: req.body.country,
-    description: req.body.description || "no description"
+    description: req.body.description
   }
   if (req.file) {
     newDetails.imageUrl = req.file.path
@@ -99,16 +99,28 @@ router.post("/cities/:cityId/edit", isLoggedIn, fileUploader.single('cityImage')
 });
 
 // DELETE city
-router.post("/cities/:cityId/delete", isLoggedIn, isAdmin, (req, res, next) => {
+router.post("/cities/:cityId/delete", isLoggedIn, (req, res, next) => {
   const { cityId } = req.params;
-  City.findByIdAndRemove(cityId)
-    .then(() => {
-      res.redirect('/');
+  if (!req.session.user.isAdmin) {
+    City.findById(cityId)
+    .then((city) => {
+      const errorMessage = "Please contact an admin if you think that a city should be removed from the website."
+      return res.render("cities/cities-edit", {city, errorMessage});
     })
     .catch((error) => {
-      console.log("Error deleting city from DB", error);
+      console.log("Error getting city details from DB", error);
       next(error);
     })
+  } else {
+    City.findByIdAndRemove(cityId)
+      .then(() => {
+        res.redirect('/');
+      })
+      .catch((error) => {
+        console.log("Error deleting city from DB", error);
+        next(error);
+      })
+  }
 })
 
 module.exports = router

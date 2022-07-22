@@ -36,8 +36,8 @@ router.post("/cities/:cityId/activities/create", isLoggedIn, validateActivityInp
     const { name, description, location, city } = req.body
     Activity.create({
         name: name,
-        description: description || "no description",
-        location: location || "no location",
+        description: description,
+        location: location,
         city: city
     })
         .then(() => {
@@ -67,8 +67,8 @@ router.post("/cities/:cityId/activities/:activityId/edit", isLoggedIn, validateA
     const { name, description, location, city } = req.body
     const updatedActivityData = {
         name: name,
-        description: description || "no description",
-        location: location || "no location",
+        description: description,
+        location: location,
         city: city
     }
     Activity.findByIdAndUpdate(activityId, updatedActivityData)
