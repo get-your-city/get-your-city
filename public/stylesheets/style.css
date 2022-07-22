@@ -84,6 +84,10 @@ h2, h3{
   transition: transform .5s;
  }
 
+ .location-input{
+  width: 18rem;
+ }
+
  @media (max-width: 600px) {
   .border{
     margin: 1em;
