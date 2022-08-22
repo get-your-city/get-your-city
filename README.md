@@ -11,7 +11,7 @@ Get Your City has been created with Ironlauncher and uses ExpressJS and Handleba
 
 ## Instructions
 
-Run `npm install` to install the dependencies needed to run the app and `npm install --dev` to install the dependencies for development.
+Run `npm install` to install the dependencies needed to run the app.
 Get Your City makes use of the following APIs:
 
 - https://www.weatherapi.com to load weather data
