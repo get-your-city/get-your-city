@@ -7,7 +7,7 @@ On Get Your City you can create cards of cities with images, brief descriptions 
 Every visitor can read the content of the website, but only users that are logged in can update cities and activities.
 Note that the right to delete cities is reserved to admins.
 
-Get Your City has been created with Ironlauncher and uses ExpressJS and Handlebars. It is deployed on Heroku using MongoDB Atlas for the database.
+Get Your City has been created with Ironlauncher and uses ExpressJS and Handlebars. It is deployed on Render using MongoDB Atlas for the database.
 
 ## Instructions
 
