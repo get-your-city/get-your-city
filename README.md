@@ -20,4 +20,4 @@ Get Your City makes use of the following APIs:
 Please be sure to register at these APIs.
 
 ## Demo
-https://get-your-city.herokuapp.com/
+Go to the demo [here](https://get-your-city.onrender.com/).
